@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx">
+    <center>
+        <VBox alignment="CENTER" spacing="20">
+            <ImageView fitWidth="120" fitHeight="120" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@logo.png" />
+                </image>
+            </ImageView>
+            <VBox spacing="10" alignment="CENTER">
+                <Label text="Username:" />
+                <TextField fx:id="usernameField" promptText="Enter your username" />
+                <Label text="Password:" />
+                <PasswordField fx:id="passwordField" promptText="Enter your password" />
+                <Button text="Login" fx:id="loginButton" onAction="#handleLogin" />
+            </VBox>
+        </VBox>
+    </center>
+</BorderPane>
