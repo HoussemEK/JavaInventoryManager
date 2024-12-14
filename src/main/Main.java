@@ -10,7 +10,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/Login.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/LoginPage.fxml"));
             Scene scene = new Scene(root, 600, 400);
             primaryStage.setScene(scene);
             primaryStage.setTitle("Inventory Management System");

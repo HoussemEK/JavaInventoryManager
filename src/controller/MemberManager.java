@@ -9,12 +9,19 @@ import java.util.List;
 
 public class MemberManager {
     public void addMember(Member member) {
-        String m = "INSERT INTO members (name, email, role) VALUES (?, ?, ?)";
-        try (Connection conn = DatabaseConnection.getInstance(); PreparedStatement ps = conn.prepareStatement(m)) {
+        String m = "INSERT INTO members (name, email, role, password) VALUES (?, ?, ?, ?)";
+        try (Connection conn = DatabaseConnection.getInstance(); PreparedStatement ps = conn.prepareStatement(m, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, member.getName());
             ps.setString(2, member.getEmail());
             ps.setString(3, member.getRole());
+            ps.setString(4, member.getPassword()); // Add password
             ps.executeUpdate();
+
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    member.setId(rs.getInt(1));
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -25,7 +32,13 @@ public class MemberManager {
         String m = "SELECT * FROM members";
         try (Connection conn = DatabaseConnection.getInstance(); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(m)) {
             while (rs.next()) {
-                members.add(new Member(rs.getInt("id"), rs.getString("name"), rs.getString("email"), rs.getString("role")));
+                members.add(new Member(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("email"),
+                        rs.getString("role"),
+                        rs.getString("password") // Retrieve password
+                ));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -39,7 +52,13 @@ public class MemberManager {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    return new Member(rs.getInt("id"), rs.getString("name"), rs.getString("email"), rs.getString("role"));
+                    return new Member(
+                            rs.getInt("id"),
+                            rs.getString("name"),
+                            rs.getString("email"),
+                            rs.getString("role"),
+                            rs.getString("password") // Retrieve password
+                    );
                 }
             }
         } catch (SQLException e) {
@@ -48,13 +67,14 @@ public class MemberManager {
         return null;
     }
 
-    public boolean updateMember(int id, String name, String email, String role) {
-        String m = "UPDATE members SET name = ?, email = ?, role = ? WHERE id = ?";
+    public boolean updateMember(int id, String name, String email, String role, String password) {
+        String m = "UPDATE members SET name = ?, email = ?, role = ?, password = ? WHERE id = ?";
         try (Connection conn = DatabaseConnection.getInstance(); PreparedStatement ps = conn.prepareStatement(m)) {
             ps.setString(1, name);
             ps.setString(2, email);
             ps.setString(3, role);
-            ps.setInt(4, id);
+            ps.setString(4, password); // Update password
+            ps.setInt(5, id);
             int rows = ps.executeUpdate();
             return rows > 0;
         } catch (SQLException e) {
