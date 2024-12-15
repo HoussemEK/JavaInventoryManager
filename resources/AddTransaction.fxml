@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="10" alignment="CENTER" xmlns:fx="http://javafx.com/fxml" fx:controller="controller.AddTransactionController">
+    <Label text="Add New Transaction" style="-fx-font-size: 20; -fx-font-weight: bold;"/>
+    
+    <HBox spacing="10">
+        <Label text="Select Member:"/>
+        <ComboBox fx:id="memberComboBox" promptText="Select a member"/>
+    </HBox>
+    
+    <HBox spacing="10">
+        <Label text="Select Item:"/>
+        <ComboBox fx:id="itemComboBox" promptText="Select an item"/>
+    </HBox>
+    
+    <HBox spacing="10">
+        <Label text="Return Date:"/>
+        <DatePicker fx:id="returnDatePicker" promptText="Optional"/>
+    </HBox>
+    
+    <Button text="Add Transaction" onAction="#handleAddTransaction" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+    <Button text="Cancel" onAction="#handleCancel" style="-fx-background-color: #F44336; -fx-text-fill: white;"/>
+</VBox>

@@ -11,10 +11,10 @@ public class TransactionManager {
     public void addTransaction(Transaction transaction) {
         String t = "INSERT INTO transactions (member_id, item_id, borrow_date, return_date) VALUES (?, ?, ?, ?)";
         try (Connection conn = DatabaseConnection.getInstance(); PreparedStatement ps = conn.prepareStatement(t)) {
-            ps.setInt(1, transaction.getMemberId());
-            ps.setInt(2, transaction.getItemId());
-            ps.setDate(3, Date.valueOf(transaction.getBorrowDate()));
-            ps.setDate(4, transaction.getReturnDate() != null ? Date.valueOf(transaction.getReturnDate()) : null);
+            ps.setInt(1, transaction.getMember_id());
+            ps.setInt(2, transaction.getItem_id());
+            ps.setDate(3, Date.valueOf(transaction.getBorrow_date()));
+            ps.setDate(4, transaction.getReturn_date() != null ? Date.valueOf(transaction.getReturn_date()) : null);
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

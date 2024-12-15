@@ -43,7 +43,7 @@ public class SignUpController {
         }
 
         MemberManager memberManager = new MemberManager();
-        memberManager.addMember(new Member(0, name, email, role, password));
+        memberManager.addMember(new Member(0, name, email,  password, role));
         System.out.println("Sign-Up successful for: " + name);
     }
 

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx" fx:controller="controller.TransactionsController" style="-fx-background-color: #f4f4f4;">
+    <top>
+        <Label text="Manage Transactions" style="-fx-font-size: 24; -fx-font-weight: bold; -fx-padding: 10;"/>
+    </top>
+
+    <center>
+        <VBox spacing="10" style="-fx-padding: 10;">
+            <TableView fx:id="transactionsTable" prefHeight="300">
+                <columns>
+                    <TableColumn text="Transaction ID" fx:id="idColumn" prefWidth="120"/>
+                    <TableColumn text="Member ID" fx:id="memberIdColumn" prefWidth="120"/>
+                    <TableColumn text="Item ID" fx:id="itemIdColumn" prefWidth="120"/>
+                    <TableColumn text="Borrow Date" fx:id="borrowDateColumn" prefWidth="180"/>
+                    <TableColumn text="Return Date" fx:id="returnDateColumn" prefWidth="180"/>
+                </columns>
+            </TableView>
+
+            <HBox alignment="CENTER" spacing="10">
+                <Button text="Add Transaction" fx:id="addButton" onAction="#handleAddTransaction" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+                <Button text="Delete Transaction" fx:id="deleteButton" onAction="#handleDeleteTransaction" style="-fx-background-color: #F44336; -fx-text-fill: white;"/>
+                <Button text="Refresh" fx:id="refreshButton" onAction="#handleRefresh" style="-fx-background-color: #2196F3; -fx-text-fill: white;"/>
+            </HBox>
+        </VBox>
+    </center>
+
+    <bottom>
+        <Button text="Back to Dashboard" onAction="#goToDashboard" style="-fx-background-color: #607D8B; -fx-text-fill: white; -fx-padding: 10;"/>
+    </bottom>
+</BorderPane>
