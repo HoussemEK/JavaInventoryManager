@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<VBox spacing="10" alignment="CENTER" xmlns:fx="http://javafx.com/fxml" fx:controller="controller.EditTransactionController" style="-fx-padding: 20;">
+    <Label text="Edit Transaction" style="-fx-font-size: 20; -fx-font-weight: bold;"/>
+    
+    <GridPane hgap="10" vgap="10">
+        <Label text="Member ID:"/>
+        <TextField fx:id="memberIdField"/>
+        
+        <Label text="Item ID:"/>
+        <TextField fx:id="itemIdField"/>
+        
+        <Label text="Borrow Date:"/>
+        <DatePicker fx:id="borrowDatePicker"/>
+        
+        <Label text="Return Date:"/>
+        <DatePicker fx:id="returnDatePicker"/>
+    </GridPane>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="Save Changes" onAction="#handleSaveChanges" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+        <Button text="Cancel" onAction="#handleCancel" style="-fx-background-color: #F44336; -fx-text-fill: white;"/>
+    </HBox>
+</VBox>

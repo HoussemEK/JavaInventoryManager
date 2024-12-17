@@ -23,6 +23,7 @@
 
             <HBox alignment="CENTER" spacing="10">
                 <Button text="Add Transaction" fx:id="addButton" onAction="#handleAddTransaction" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+                <Button text="Edit Transaction" fx:id="editButton" onAction="#handleEditTransaction" style="-fx-background-color: #FF9800; -fx-text-fill: white;"/>
                 <Button text="Delete Transaction" fx:id="deleteButton" onAction="#handleDeleteTransaction" style="-fx-background-color: #F44336; -fx-text-fill: white;"/>
                 <Button text="Refresh" fx:id="refreshButton" onAction="#handleRefresh" style="-fx-background-color: #2196F3; -fx-text-fill: white;"/>
             </HBox>

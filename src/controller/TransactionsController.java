@@ -12,7 +12,6 @@ import model.Transaction;
 import utils.DatabaseConnection;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -42,18 +41,20 @@ public class TransactionsController {
 
     @FXML
     private void initialize() {
-        // Configurer les colonnes pour utiliser les attributs de Transaction
+        // Configuration des colonnes avec les attributs de Transaction
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        memberIdColumn.setCellValueFactory(new PropertyValueFactory<>("member_id")); // Correspond à la colonne member_id
-        itemIdColumn.setCellValueFactory(new PropertyValueFactory<>("item_id"));     // Correspond à la colonne item_id
-        borrowDateColumn.setCellValueFactory(new PropertyValueFactory<>("borrow_date")); // Correspond à borrow_date
-        returnDateColumn.setCellValueFactory(new PropertyValueFactory<>("return_date")); // Correspond à return_date
+        memberIdColumn.setCellValueFactory(new PropertyValueFactory<>("member_id"));
+        itemIdColumn.setCellValueFactory(new PropertyValueFactory<>("item_id"));
+        borrowDateColumn.setCellValueFactory(new PropertyValueFactory<>("borrow_date"));
+        returnDateColumn.setCellValueFactory(new PropertyValueFactory<>("return_date"));
 
-        loadTransactions(); // Charger les transactions depuis la base de données
+        // Chargement initial des transactions
+        loadTransactions();
     }
 
-
-
+    /**
+     * Charger les transactions depuis la base de données
+     */
     private void loadTransactions() {
         transactionList.clear();
         String query = "SELECT * FROM transactions";
@@ -65,10 +66,10 @@ public class TransactionsController {
             while (rs.next()) {
                 transactionList.add(new Transaction(
                         rs.getInt("id"),
-                        rs.getInt("member_id"), // Utilisation de member_id
-                        rs.getInt("item_id"),   // Utilisation de item_id
-                        rs.getDate("borrow_date").toLocalDate(), // Conversion de borrow_date
-                        rs.getDate("return_date") != null ? rs.getDate("return_date").toLocalDate() : null // Conversion de return_date (nullable)
+                        rs.getInt("member_id"),
+                        rs.getInt("item_id"),
+                        rs.getDate("borrow_date").toLocalDate(),
+                        rs.getDate("return_date") != null ? rs.getDate("return_date").toLocalDate() : null
                 ));
             }
             transactionsTable.setItems(transactionList);
@@ -78,7 +79,9 @@ public class TransactionsController {
         }
     }
 
-
+    /**
+     * Ajouter une nouvelle transaction
+     */
     @FXML
     private void handleAddTransaction() {
         try {
@@ -90,13 +93,47 @@ public class TransactionsController {
             stage.setScene(new Scene(root));
             stage.showAndWait();
 
-            loadTransactions(); // Rafraîchir les transactions après l'ajout
+            loadTransactions(); // Rafraîchir la table après ajout
         } catch (Exception e) {
             e.printStackTrace();
+            showAlert("Error", "Failed to open Add Transaction window.");
         }
     }
 
+    /**
+     * Modifier une transaction sélectionnée
+     */
+    @FXML
+    private void handleEditTransaction() {
+        Transaction selectedTransaction = transactionsTable.getSelectionModel().getSelectedItem();
+        if (selectedTransaction == null) {
+            showAlert("Error", "Please select a transaction to edit.");
+            return;
+        }
 
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/EditTransaction.fxml"));
+            Parent root = loader.load();
+
+            // Passer la transaction sélectionnée au contrôleur EditTransactionController
+            EditTransactionController controller = loader.getController();
+            controller.setTransaction(selectedTransaction);
+
+            Stage stage = new Stage();
+            stage.setTitle("Edit Transaction");
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+
+            loadTransactions(); // Rafraîchir la table après modification
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert("Error", "Failed to open Edit Transaction window.");
+        }
+    }
+
+    /**
+     * Supprimer une transaction sélectionnée
+     */
     @FXML
     private void handleDeleteTransaction() {
         Transaction selectedTransaction = transactionsTable.getSelectionModel().getSelectedItem();
@@ -118,11 +155,17 @@ public class TransactionsController {
         }
     }
 
+    /**
+     * Rafraîchir la table
+     */
     @FXML
     private void handleRefresh() {
         loadTransactions();
     }
 
+    /**
+     * Retourner au tableau de bord
+     */
     @FXML
     private void goToDashboard() {
         try {
@@ -134,6 +177,9 @@ public class TransactionsController {
         }
     }
 
+    /**
+     * Afficher une alerte
+     */
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);

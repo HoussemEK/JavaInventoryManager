@@ -56,39 +56,46 @@ public class DashboardController {
     @FXML
     private void goToItems() {
         try {
-            Stage stage = (Stage) itemsButton.getScene().getWindow(); // Récupère la fenêtre actuelle
-            Parent root = FXMLLoader.load(getClass().getResource("/Items.fxml")); // Charge Items.fxml
-            stage.setScene(new Scene(root, 800, 600)); // Affiche la nouvelle scène
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    @FXML
-    private void goToMembers() {
-        System.out.println("Navigating to Members...");
-    }
-
-    @FXML
-    private void goToTransactions() {
-        try {
-            // Charger le fichier Transactions.fxml
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Transactions.fxml"));
-            Parent root = loader.load();
-
-            // Obtenir la scène actuelle et remplacer par la scène des transactions
-            Stage stage = (Stage) itemsButton.getScene().getWindow(); // Remplace itemsButton par n'importe quel bouton dans ta vue
+            Stage stage = (Stage) itemsButton.getScene().getWindow();
+            Parent root = FXMLLoader.load(getClass().getResource("/Items.fxml"));
             stage.setScene(new Scene(root, 800, 600));
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    @FXML
+    private void goToMembers() {
+        try {
+            Stage stage = (Stage) membersButton.getScene().getWindow();
+            Parent root = FXMLLoader.load(getClass().getResource("/Members.fxml"));
+            stage.setScene(new Scene(root, 800, 600));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void goToTransactions() {
+        try {
+            Stage stage = (Stage) transactionsButton.getScene().getWindow();
+            Parent root = FXMLLoader.load(getClass().getResource("/Transactions.fxml"));
+            stage.setScene(new Scene(root, 800, 600));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     private void handleLogout() {
         UserSession.clearSession();
+        try {
+            Stage stage = (Stage) welcomeLabel.getScene().getWindow();
+            Parent root = FXMLLoader.load(getClass().getResource("/LoginPage.fxml"));
+            stage.setScene(new Scene(root, 600, 400));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         System.out.println("Logged out.");
     }
 }
